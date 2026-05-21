@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest(classes = SwallowErpApplication.class)
+@SpringBootTest //(classes = SwallowErpApplication.class)
 public class SysUserMapperTest {
     @Autowired  // 自动注入
     private SysUserMapper sysUserMapper;  // 4. 注入Mapper对象
