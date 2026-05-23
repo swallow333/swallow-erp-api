@@ -44,7 +44,7 @@ public class AuthController {
             return CommonResult.error(CommonCodeEnum.USER_NOT_EXIST);
         }
         // 密码校验
-        String md5Password = DigestUtils.md5DigestAsHex(password.getBytes());
+        String md5Password = DigestUtils.md5DigestAsHex(password.getBytes());   // 调用静态抽象方法，返回MD5哈希值16进制字符串
         if (!md5Password.equals(user.getPassword())) {
             return CommonResult.error(CommonCodeEnum.USER_PASSWORD_ERROR);
         }

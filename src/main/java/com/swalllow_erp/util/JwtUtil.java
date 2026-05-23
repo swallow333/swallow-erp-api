@@ -5,7 +5,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
@@ -16,41 +15,34 @@ import java.util.Map;
  * @Author: Swallow333
  * @Date: 2026/05/23 19:35
  */
+
 @Component
 public class JwtUtil {
-
     @Value("${jwt.secret:SwallowERPSystemSecretKey2026!@#$%^&*()}")
     private String secret;
-
     @Value("${jwt.expiration:7200000}")
     private Long expiration;  // 2小时 = 7200000 毫秒
-
     @Value("${jwt.header:Authorization}")
     private String header;
-
     @Value("${jwt.tokenPrefix:Bearer }")
     private String tokenPrefix;
-
     /**
      * 生成 Token
      */
     public String generateToken(Integer userId, String username) {
-        Map<String, Object> claims = new HashMap<>();
+        Map<String, Object> claims = new HashMap<>();   // Claims是JWT的有效载荷(Payload)部分，包含了用于验证和识别令牌持有者的关键信息
         claims.put("userId", userId);
         claims.put("username", username);
-
         Date now = new Date();
         Date expireDate = new Date(now.getTime() + expiration);
-
-        return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(String.valueOf(userId))
-                .setIssuedAt(now)
-                .setExpiration(expireDate)
-                .signWith(getSecretKey())
-                .compact();
+        return Jwts.builder()   // 构建器初始化
+                .claims(claims)  // 自定义声明设置
+                .subject(String.valueOf(userId))    // 通常用于标识令牌的拥有者,通常是用户唯一标识符
+                .issuedAt(now)  // 签发时间设置
+                .expiration(expireDate) // 过期时间设置
+                .signWith(getSecretKey())   //  使用指定密钥对 JWT 进行签名，确保令牌的完整性和真实性
+                .compact(); // 生成最终令牌
     }
-
     /**
      * 从 Token 中获取用户ID
      */
@@ -61,7 +53,6 @@ public class JwtUtil {
         }
         return Integer.parseInt(claims.getSubject());
     }
-
     /**
      * 从 Token 中获取用户名
      */
@@ -72,7 +63,6 @@ public class JwtUtil {
         }
         return (String) claims.get("username");
     }
-
     /**
      * 验证 Token 是否有效
      */
@@ -88,7 +78,6 @@ public class JwtUtil {
             return false;
         }
     }
-
     /**
      * 刷新 Token
      */
@@ -100,7 +89,6 @@ public class JwtUtil {
         }
         return generateToken(userId, username);
     }
-
     /**
      * 获取 Token 中的 Claims
      */
@@ -119,14 +107,10 @@ public class JwtUtil {
             return null;
         }
     }
-
-    /**
-     * 获取签名密钥
-     */
+    // 获取签名密钥
     private SecretKey getSecretKey() {
-        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)); // 签名算法选择
     }
-
     /**
      * 从请求头获取 Token
      */
@@ -136,7 +120,6 @@ public class JwtUtil {
         }
         return null;
     }
-
     // ========== Getter ==========
     public String getHeader() {
         return header;
