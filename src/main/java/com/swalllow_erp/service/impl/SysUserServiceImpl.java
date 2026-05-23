@@ -8,9 +8,7 @@ import com.swalllow_erp.service.SysUserService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser>
-        implements SysUserService {
-
+public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
     @Override
     public SysUser getByUsername(String username) {
         // 构造查询条件：username = 传入的值
