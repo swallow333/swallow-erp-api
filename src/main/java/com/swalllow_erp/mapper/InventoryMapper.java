@@ -16,4 +16,8 @@ public interface InventoryMapper extends BaseMapper<Inventory> {
 
     @Select("SELECT * FROM inventory WHERE product_id = #{productId}")
     Inventory selectByProductId(@Param("productId") Integer productId);
+
+    // 新增方法
+    @Select("SELECT COUNT(*) FROM inventory WHERE quantity < #{threshold}")
+    Integer countLowStock(@Param("threshold") Integer threshold);
 }

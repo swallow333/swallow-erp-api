@@ -24,4 +24,8 @@ public interface ProductMapper extends BaseMapper<Product> {
 
     @Update("UPDATE product SET stock = stock + #{quantity} WHERE id = #{productId}")
     int increaseStock(@Param("productId") Integer productId, @Param("quantity") Integer quantity);
+
+    // 新增方法
+    @Select("SELECT COUNT(*) FROM product WHERE status = #{status}")
+    Integer countByStatus(@Param("status") Integer status);
 }
