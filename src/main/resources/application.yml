@@ -20,7 +20,7 @@ server:
 
   # JWT 配置
 jwt:
-  secret: SwallowERPSystemSecretKey2026!@#$%^&*()  # 密钥（至少32字符）
-  expiration: 7200000                              # 过期时间（毫秒）2小时
   header: Authorization                            # 请求头名称
   tokenPrefix: Bearer                              # Token 前缀
+  secret: SwallowERPSystemSecretKey202606272341    # 密钥（至少32字符）
+  expiration: 7200000                              # 过期时间（毫秒）2小时
