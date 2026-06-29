@@ -85,7 +85,7 @@ public interface DashboardMapper {
     /**
      * 近 N 天销售趋势
      */
-    @Select("SELECT DATE_FORMAT(create_time, '%m-%d') AS date, " +
+    @Select("SELECT DATE(create_time) AS date, " +
             "COALESCE(SUM(total_amount), 0) AS amount " +
             "FROM sale_order " +
             "WHERE create_time >= DATE_SUB(CURDATE(), INTERVAL #{days} DAY) " +
