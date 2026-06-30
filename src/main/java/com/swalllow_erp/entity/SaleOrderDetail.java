@@ -1,5 +1,6 @@
 package com.swalllow_erp.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -22,6 +23,8 @@ public class SaleOrderDetail {
     private LocalDateTime updateTime;
 
     // 非数据库字段
+    @TableField(exist = false)  // TODO：修改数据库字段
     private String productName;
+    @TableField(exist = false)
     private String productSku;
 }
